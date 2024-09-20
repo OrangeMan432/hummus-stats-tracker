@@ -1,0 +1,3 @@
+entrypoint = "main.py"
+hidden = ['.config']
+modules = ["python-3.11"]
