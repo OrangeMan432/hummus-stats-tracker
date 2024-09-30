@@ -40,9 +40,8 @@ def store_stat(stat_name, stat_value):
         json.dump(existing_data, f)
     print(f"Stored {stat_name} at {time.ctime()}")
 
-    # Update the next save time after storing the stat
     global next_save_time
-    next_save_time = time.time() + 900  # 15 minutes
+    next_save_time = time.time() + 900  # 900 = 15 minutes
 
 
 def display_timer(remaining_time):
@@ -66,7 +65,6 @@ def main():
         if stats:
             for stat_name, stat_value in stats.items():
                 if isinstance(stat_value, dict):
-                    # Handle nested 'gateway_stats'
                     for nested_name, nested_value in stat_value.items():
                         store_stat(f"{stat_name}_{nested_name}", nested_value)
                 else:
@@ -79,7 +77,6 @@ def main():
             if stats:
                 for stat_name, stat_value in stats.items():
                     if isinstance(stat_value, dict):
-                        # Handle nested 'gateway_stats'
                         for nested_name, nested_value in stat_value.items():
                             store_stat(f"{stat_name}_{nested_name}",
                                        nested_value)
@@ -88,12 +85,24 @@ def main():
 
             time_remaining = next_save_time - time.time()
 
-            while time_remaining > 0:
-                display_timer(time_remaining)
-                time.sleep(1)
-                time_remaining = next_save_time - time.time()
+            if time_remaining > 0:  # Only sleep if time_remaining is positive
+                while time_remaining > 0:
+                    display_timer(time_remaining)
+                    time.sleep(1)
+                    time_remaining = next_save_time - time.time()
 
-            time.sleep(time_remaining)
+            else:
+                print("Saving stats now (missed timer)")
+                for stat_name, stat_value in stats.items():
+                    if isinstance(stat_value, dict):
+                        for nested_name, nested_value in stat_value.items():
+                            store_stat(f"{stat_name}_{nested_name}",
+                                       nested_value)
+                    else:
+                        store_stat(stat_name, stat_value)
+
+                next_save_time = time.time() + 900  # Update for the next save
+
 
 
 if __name__ == "__main__":
