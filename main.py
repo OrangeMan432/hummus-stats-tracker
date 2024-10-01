@@ -5,10 +5,11 @@ import os
 import argparse
 
 VERSION = "v1.0.0"
+NAME = "OrangeManStatsTracker"
 STATS_URL = "https://hummus.sys42.net/api/i/stats"
-USER_AGENT = f"OrangeManStatsTracker/{VERSION}"
+USER_AGENT = f"{NAME}/{VERSION}"
 
-print(f"OrangeManStatsTracker {VERSION}")
+print(f"{NAME} {VERSION}")
 print("stalking ziad87's hummus api\n")
 
 
@@ -46,7 +47,7 @@ def store_stat(stat_name, stat_value):
 
 def display_timer(remaining_time):
     minutes, seconds = divmod(remaining_time, 60)
-    print(f"Next save in {int(minutes)}:{int(seconds):02d}", end="\r")
+    print(f"Next save in {int(minutes)}:{int(seconds):02d}    ", end="\r")
 
 
 def main():
