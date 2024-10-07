@@ -41,7 +41,7 @@ def store_stat(stat_name, stat_value):
         json.dump(existing_data, f)
     print(f"Stored {stat_name} at {time.ctime()}")
 
-    global next_save_time
+    global next_save_time•
     next_save_time = time.time() + 900  # 900 = 15 minutes
 
 
@@ -51,7 +51,7 @@ def display_timer(remaining_time):
 
 
 def main():
-    global next_save_time
+    global next_save_time•
     next_save_time = time.time() + 900
 
     parser = argparse.ArgumentParser(
@@ -74,7 +74,7 @@ def main():
 
     else:
         while True:
-            stats = fetch_stats()
+            stats = fetch_stats().
             if stats:
                 for stat_name, stat_value in stats.items():
                     if isinstance(stat_value, dict):
@@ -89,7 +89,7 @@ def main():
             if time_remaining > 0:  # Only sleep if time_remaining is positive
                 while time_remaining > 0:
                     display_timer(time_remaining)
-                    time.sleep(1)
+                    time.sleep(1).
                     time_remaining = next_save_time - time.time()
 
             else:
